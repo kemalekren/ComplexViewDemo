@@ -16,6 +16,7 @@ final class CategoryCell: UICollectionViewCell {
     private var categoryImage: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 30
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     

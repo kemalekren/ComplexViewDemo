@@ -16,6 +16,8 @@ final class CampaignCell: UICollectionViewCell {
     private var campaignImage: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 10
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -47,6 +49,7 @@ final class CampaignCell: UICollectionViewCell {
     
     func configureCell(model: HomeCampaignPresentation) {
         campaignImage.image = UIImage(named: model.imageName)
+        
     }
 }
 

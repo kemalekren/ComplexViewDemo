@@ -21,8 +21,13 @@ extension HomeScene {
           $0.bottom.trailing.leading.equalToSuperview()
         }
         
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "id")
+        collectionView.register(CampaignCell.self, forCellWithReuseIdentifier: CampaignCell.cellId)
+        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.cellId)
+        collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.cellId)
+        collectionView.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.cellId)
         
+        collectionView.showsHorizontalScrollIndicator = false
+    
         collectionView.delegate = self
         createDataSources()
         reloadData()
@@ -64,35 +69,35 @@ extension HomeScene {
     
     
     private func campaignCell(campaing: HomeCampaignPresentation, indexPath: IndexPath) -> UICollectionViewCell {
-       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as? UICollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CampaignCell.cellId, for: indexPath) as? CampaignCell else {
             fatalError("Product cell can't created.")
         }
-        cell.backgroundColor = .yellow
+        cell.configureCell(model: campaing)
         return cell
     }
     
     private func categoryCell(category: HomeCategoryPresentation, indexPath: IndexPath) -> UICollectionViewCell {
-       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as? UICollectionViewCell else {
+       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.cellId, for: indexPath) as? CategoryCell else {
             fatalError("Product cell can't created.")
         }
-        cell.backgroundColor = .green
+        cell.configureCell(model: category)
         return cell
     }
     
     private func productCell(product: HomeProductPresentation, indexPath: IndexPath) -> UICollectionViewCell {
-       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as? UICollectionViewCell else {
+       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.cellId, for: indexPath) as? ProductCell else {
             fatalError("Product cell can't created.")
         }
-        cell.backgroundColor = .blue
+        cell.configureCell(model: product)
         return cell
     }
     
     
     private func bannerCell(banner: HomeBannerPresentation, indexPath: IndexPath) -> UICollectionViewCell {
-       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as? UICollectionViewCell else {
+       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCell.cellId, for: indexPath) as? BannerCell else {
             fatalError("Product cell can't created.")
         }
-        cell.backgroundColor = .red
+        cell.configureCell(model: banner)
         return cell
     }
 
@@ -105,13 +110,13 @@ extension HomeScene {
             
             switch section.itemType {
             case .product:
-                return self.createDummyView(using: section)
+                return self.createProductView()
             case .banner:
-                return self.createDummyView1(using: section)
+                return self.createBannerView()
             case .campaing:
-                return self.createDummyView(using: section)
+                return self.createCampaignView()
             case .category:
-                return self.createDummyView1(using: section)
+                return self.createCategoryView()
             }
         }
         let config = UICollectionViewCompositionalLayoutConfiguration()
@@ -120,37 +125,71 @@ extension HomeScene {
         return layout
     }
     
-    private func createDummyView(using section: HomePresentation) -> NSCollectionLayoutSection  {
+    private func createCampaignView() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                               heightDimension: .estimated(210))
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
+                                               heightDimension: .absolute(200))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitems: [layoutItem])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
-        
-        layoutSection.interGroupSpacing = 12
+        layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        layoutSection.interGroupSpacing = 5
         return layoutSection
     }
     
-    private func createDummyView1(using section: HomePresentation) -> NSCollectionLayoutSection  {
+    private func createCategoryView() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1))
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.25),
+                                               heightDimension: .fractionalWidth(0.30))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                       subitems: [layoutItem])
+        
+        let layoutSection = NSCollectionLayoutSection(group: group)
+        layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        layoutSection.interGroupSpacing = 10
+        return layoutSection
+    }
+    
+    private func createProductView() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
                                               heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                               heightDimension: .estimated(210))
+                                               heightDimension: .estimated(400))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitems: [layoutItem])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
         
-        layoutSection.interGroupSpacing = 12
+        layoutSection.interGroupSpacing = 15
+        return layoutSection
+    }
+    
+    private func createBannerView() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1))
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                               heightDimension: .estimated(200))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                       subitems: [layoutItem])
+        
+        let layoutSection = NSCollectionLayoutSection(group: group)
+        layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
+        layoutSection.interGroupSpacing = 15
         return layoutSection
     }
 

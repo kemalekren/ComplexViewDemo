@@ -32,8 +32,7 @@ private extension HomeViewModel {
             [
                 CampaignModel(imageName: "campaign1"),
                 CampaignModel(imageName: "campaign2"),
-                CampaignModel(imageName: "campaign3"),
-                CampaignModel(imageName: "campaign4")
+                CampaignModel(imageName: "campaign3")
             ]
         }
         
@@ -44,11 +43,13 @@ private extension HomeViewModel {
     func createDummyCategories() {
         var categories: [CategoriesModel] {
             [
-                CategoriesModel(title: "Tech", imageName: "tech"),
-                CategoriesModel(title: "Lifestyle", imageName: "lifestyle"),
-                CategoriesModel(title: "Food", imageName: "food"),
-                CategoriesModel(title: "Home", imageName: "home"),
-                CategoriesModel(title: "Toys", imageName: "toys")
+                CategoriesModel(title: "Food", imageName: "category1"),
+                CategoriesModel(title: "Computer", imageName: "category2"),
+                CategoriesModel(title: "Clothes", imageName: "category3"),
+                CategoriesModel(title: "Sports", imageName: "category4"),
+                CategoriesModel(title: "Music", imageName: "category5"),
+                CategoriesModel(title: "Lifestyle", imageName: "category6"),
+                CategoriesModel(title: "Shoes", imageName: "category7"),
             ]
         }
         
@@ -63,19 +64,19 @@ private extension HomeViewModel {
                 ProductModel(title: "Computer-1",
                              description: "Amazing Computerm, Super Deal",
                              price: "200",
-                             imageName: "computer1"),
+                             imageName: "product1"),
                 ProductModel(title: "Computer-2",
                              description: "Amazing Computerm, Super Deal",
                              price: "300",
-                             imageName: "computer2"),
+                             imageName: "product2"),
                 ProductModel(title: "Computer-3",
                              description: "Amazing Computerm, Super Deal",
                              price: "250",
-                             imageName: "computer3"),
+                             imageName: "product3"),
                 ProductModel(title: "Computer-4",
                              description: "Amazing Computerm, Super Deal",
                              price: "260",
-                             imageName: "computer4"),
+                             imageName: "product4"),
                 
             ]
         }

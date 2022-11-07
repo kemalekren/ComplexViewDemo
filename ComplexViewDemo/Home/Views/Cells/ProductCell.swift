@@ -16,6 +16,8 @@ final class ProductCell: UICollectionViewCell {
     private var productImage: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 10
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -36,8 +38,8 @@ final class ProductCell: UICollectionViewCell {
     private var productPrice: UILabel = {
         let label = UILabel()
         label.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textAlignment = .right
+        label.font = .systemFont(ofSize: 14, weight: .bold)
         return label
     }()
     
@@ -61,20 +63,19 @@ final class ProductCell: UICollectionViewCell {
         containerView.addSubview(productDescription)
         
         containerView.snp.makeConstraints {
-            $0.top.trailing.leading.equalToSuperview()
-            $0.height.equalTo(120)
+            $0.top.trailing.bottom.leading.equalToSuperview()
         }
         
         productImage.snp.makeConstraints {
             $0.top.leading.equalToSuperview().offset(10)
             $0.trailing.equalToSuperview().offset(-10)
-            $0.height.equalTo(70)
         }
         
         productPrice.snp.makeConstraints {
-            $0.top.equalTo(productImage.snp.bottom).offset(-20)
+            $0.top.equalTo(productImage.snp.bottom).offset(-40)
             $0.trailing.equalTo(productImage.snp.trailing)
-            $0.height.equalTo(20)
+            $0.leading.equalTo(productImage.snp.leading)
+            $0.height.equalTo(40)
         }
         
         productTitle.snp.makeConstraints {
@@ -92,7 +93,7 @@ final class ProductCell: UICollectionViewCell {
     
     func configureCell(model: HomeProductPresentation) {
         productImage.image = UIImage(named: model.imageName)
-        productPrice.text = model.price
+        productPrice.text = "$ " + model.price
         productTitle.text = model.title
         productDescription.text = model.description
     }
