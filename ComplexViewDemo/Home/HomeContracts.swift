@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+protocol HomeVMProtocol: AnyObject {
+    var delegate: HomeVMOutputDelegate? { get set}
+    var homeData: [HomePresentation] { get set }
+    
+    func loadData()
+}
+
+protocol HomeVMOutputDelegate: AnyObject {
+    func refreshUI()
+}
+
